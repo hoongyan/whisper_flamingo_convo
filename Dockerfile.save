@@ -3,17 +3,14 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y ffmpeg=4.2.2-1+b1 sox git && rm -rf /var/lib/apt/lists/*
 RUN conda create -n whisper-flamingo python=3.8 -y
 SHELL ["conda", "run", "-n", "whisper-flamingo", "/bin/bash", "-c"]
+COPY requirements.txt .
 RUN git clone https://github.com/facebookresearch/muavic.git muavic-setup && \
     cd muavic-setup && pip install -r requirements.txt && cd ..
 RUN git clone -b muavic https://github.com/facebookresearch/av_hubert.git && \
     cd av_hubert && git submodule init && git submodule update && \
-    pip install -r requirements.txt && cd fairseq && pip install --editable ./ && cd ../..
-RUN pip install tiktoken==0.5.2 pytorch-lightning==2.1.3 numba==0.58.1 transformers==4.36.2 evaluate tensorboardX \
-    fastapi==0.110.0 uvicorn==0.29.0 python-multipart==0.0.9 pydantic==1.10.14 whisper \
-    numpy==1.22 scipy>=1.8.0 opencv-python==4.5.4.60 sentencepiece==0.2.0 editdistance==0.6.0
+    pip install -r updated_requirements.txt && cd fairseq && pip install --editable ./ && cd ../..
+RUN pip install -r requirements.txt
 RUN pip install pip==24.0
 COPY . .
 EXPOSE 8000
 CMD ["conda", "run", "-n", "whisper-flamingo", "uvicorn", "whisper_service:app", "--host", "0.0.0.0", "--port", "8000"]
-^X
-
