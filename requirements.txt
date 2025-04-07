@@ -1,0 +1,33 @@
+# From first requirements.txt
+python-speech-features==0.6
+scipy>=1.8.0
+opencv-python==4.5.4.60
+sentencepiece==0.2.0
+editdistance==0.6.0
+
+# From second requirements.txt
+sox
+wget
+tqdm
+pandas
+yt_dlp
+xmltodict
+scikit-image
+ffmpeg-python
+numpy==1.22
+
+# For whisper_service.py (from imports and local_packages.txt)
+fastapi==0.110.0  # Matches your local version
+uvicorn==0.29.0   # Matches your local version
+torch==2.2.2      # Matches your local version
+whisper           # No specific version in local, use latest compatible
+python-multipart==0.0.9
+pydantic==1.10.14
+
+# From README extras
+tiktoken==0.5.2
+pytorch-lightning==2.1.3
+numba==0.58.1
+transformers==4.36.2
+evaluate
+tensorboardX
