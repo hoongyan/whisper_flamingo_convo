@@ -1,7 +1,9 @@
 FROM continuumio/miniconda3:4.10.3
 WORKDIR /app
-RUN apt-get update && apt-get install -y ffmpeg=4.2.2-1+b1 sox git && rm -rf /var/lib/apt/lists/*
-RUN conda create -n whisper-flamingo python=3.8 -y
+RUN apt-get update && apt-get install -y sox git && rm -rf /var/lib/apt/lists/*
+# Create conda environment and install ffmpeg via conda
+RUN conda create -n whisper-flamingo python=3.8 -y && \
+    conda install -n whisper-flamingo -c conda-forge ffmpeg==4.2.2 -y
 SHELL ["conda", "run", "-n", "whisper-flamingo", "/bin/bash", "-c"]
 COPY requirements.txt .
 RUN git clone https://github.com/facebookresearch/muavic.git muavic-setup && \
